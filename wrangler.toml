@@ -1,0 +1,8 @@
+name = "xiaoHのbolg"
+compatibility_date = "2026-06-12" # 2026-06-12
+
+[assets]
+directory = "./dist"
+
+[vars]
+NODE_VERSION = "22"
