@@ -13,7 +13,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "bolg",
 
 	// 站点 URL
-	site_url: "https://",
+	site_url: "https://hwh.ccwu.cc",
 
 	// 站点描述
 	description:
