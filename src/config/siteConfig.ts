@@ -7,20 +7,23 @@ const SITE_LANG = "zh_CN";
 
 export const siteConfig: SiteConfig = {
 	// 站点标题
-	title: "Firefly",
+	title: "xiaoH",
 
 	// 站点副标题
-	subtitle: "Demo site",
+	subtitle: "bolg",
 
 	// 站点 URL
-	site_url: "https://firefly.cuteleaf.cn",
+	site_url: "https://",
 
 	// 站点描述
 	description:
-		"Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。",
+		"Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，\
+		专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，\
+		让您能够轻松打造出专业且美观的个人博客网站。",
 
 	// 站点关键词
 	keywords: [
+		"H",
 		"Firefly",
 		"Fuwari",
 		"Astro",
@@ -229,7 +232,7 @@ export const siteConfig: SiteConfig = {
 		// - "both": 同时输出 AVIF 和 WebP（推荐，浏览器自动选择最佳格式）
 		formats: "webp",
 		// 图片压缩质量 (1-100)，值越低体积越小但质量越差，推荐 70-85
-		quality: 85,
+		quality: 70,
 		// 为特定域名的图片添加 referrerpolicy="no-referrer" 属性
 		// 支持通配符 *，例如：["i0.hdslb.com", "*.bilibili.com"]
 		// 可解决指定域名图片加载时的 403 问题（如防盗链图片）

@@ -62,7 +62,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	// 横幅壁纸和全屏壁纸共享配置
 	common: {
 		// 横幅文字遮罩暗度，0-1之间，值越大越暗
-		dimOpacity: 0.2,
+		dimOpacity: 0.5,
 		// 主页横幅文字
 		homeText: {
 			// 是否启用主页横幅文字
@@ -70,17 +70,17 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 是否允许用户通过控制面板切换横幅标题显示
 			switchable: true,
 			// 主页横幅主标题
-			title: "Lovely firefly!",
+			title: "xiaoHのbolg",
 			// 主页横幅主标题字体大小
 			titleSize: "3.8rem",
 			// 主页横幅副标题
 			subtitle: [
-				"In Reddened Chrysalis, I Once Rest",
-				"From Shattered Sky, I Free Fall",
-				"Amidst Silenced Stars, I Deep Sleep",
-				"Upon Lighted Fyrefly, I Soon Gaze",
-				"From Undreamt Night, I Thence Shine",
-				"In Finalized Morrow, I Full Bloom",
+				"打破循环,步入正轨",
+				"允许一切,如其所是",
+				"木讷的树,自由的风",
+				"我希望 我希望的希望 有希望",
+				"恭喜你发现了宝藏",
+				"梦不到的夜晚,我在那里发光",
 			],
 			// 主页横幅副标题字体大小
 			subtitleSize: "1.5rem",
