@@ -14,6 +14,7 @@ import {
 	getDefaultOverlayBlur,
 	getDefaultOverlayCardOpacity,
 	getDefaultOverlayOpacity,
+	getDefaultSakuraEnabled,
 	getDefaultWavesEnabled,
 	getHue,
 	getStoredBannerCarouselEnabled,
@@ -21,6 +22,7 @@ import {
 	getStoredOverlayBlur,
 	getStoredOverlayCardOpacity,
 	getStoredOverlayOpacity,
+	getStoredSakuraEnabled,
 	getStoredWallpaperMode,
 	getStoredWavesEnabled,
 	setBannerCarouselEnabled,
@@ -29,12 +31,13 @@ import {
 	setOverlayBlur,
 	setOverlayCardOpacity,
 	setOverlayOpacity,
+	setSakuraEnabled,
 	setWallpaperMode,
 	setWavesEnabled,
 } from "@utils/setting-utils";
 import { onMount } from "svelte";
 import Icon from "@/components/common/Icon.svelte";
-import { backgroundWallpaper, siteConfig } from "@/config";
+import { backgroundWallpaper, sakuraConfig, siteConfig } from "@/config";
 import type { WALLPAPER_MODE } from "@/types/config";
 
 type OverlaySliderItem = {
@@ -72,6 +75,8 @@ let bannerTitleEnabled = $state(true);
 const defaultBannerTitleEnabled = getDefaultBannerTitleEnabled();
 let bannerCarouselEnabled = $state(true);
 const defaultBannerCarouselEnabled = getDefaultBannerCarouselEnabled();
+let sakuraEnabled = $state(true);
+const defaultSakuraEnabled = getDefaultSakuraEnabled();
 let overlayOpacity = $state(getDefaultOverlayOpacity());
 const defaultOverlayOpacity = getDefaultOverlayOpacity();
 let overlayBlur = $state(getDefaultOverlayBlur());
@@ -98,6 +103,8 @@ const isBannerTitleSwitchable =
 // 是否允许用户切换横幅轮播
 const isBannerCarouselSwitchable =
 	backgroundWallpaper.banner?.carousel?.switchable ?? false;
+// 是否允许用户切换樱花动画
+const isSakuraSwitchable = sakuraConfig.switchable ?? false;
 // 是否有任何横幅设置可显示（后续添加新设置时在此处添加条件）
 const hasBannerSettings =
 	isWavesSwitchable || isBannerTitleSwitchable || isBannerCarouselSwitchable;
@@ -141,7 +148,8 @@ const hasAnyContent =
 	isWallpaperSwitchable ||
 	allowLayoutSwitch ||
 	hasBannerSettings ||
-	hasOverlaySettings;
+	hasOverlaySettings ||
+	isSakuraSwitchable;
 
 let overlaySliderItems = $derived<OverlaySliderItem[]>([
 	{
@@ -270,6 +278,26 @@ function toggleBannerCarouselEnabled() {
 	setBannerCarouselEnabled(bannerCarouselEnabled);
 }
 
+function toggleSakuraEnabled() {
+	sakuraEnabled = !sakuraEnabled;
+	setSakuraEnabled(sakuraEnabled);
+	window.dispatchEvent(
+		new CustomEvent("sakuraToggleChange", {
+			detail: { enabled: sakuraEnabled },
+		}),
+	);
+}
+
+function resetSakuraEnabled() {
+	sakuraEnabled = defaultSakuraEnabled;
+	setSakuraEnabled(defaultSakuraEnabled);
+	window.dispatchEvent(
+		new CustomEvent("sakuraToggleChange", {
+			detail: { enabled: defaultSakuraEnabled },
+		}),
+	);
+}
+
 function switchWallpaperMode(newMode: WALLPAPER_MODE) {
 	wallpaperMode = newMode;
 	setWallpaperMode(newMode);
@@ -350,6 +378,9 @@ onMount(() => {
 
 	// 从localStorage读取横幅轮播状态
 	bannerCarouselEnabled = getStoredBannerCarouselEnabled();
+
+	// 从localStorage读取樱花动画状态
+	sakuraEnabled = getStoredSakuraEnabled();
 
 	// 从localStorage读取全屏透明设置状态
 	overlayOpacity = getStoredOverlayOpacity();
@@ -706,6 +737,41 @@ $effect(() => {
                     {#if currentLayout === 'grid'}
                         <Icon icon="material-symbols:check-circle" class="text-[1rem] shrink-0 text-(--primary)"></Icon>
                     {/if}
+                </button>
+            </div>
+        </div>
+    {/if}
+
+    <!-- Sakura Animation Section -->
+    {#if isSakuraSwitchable}
+        <div class="mt-2 mb-2">
+            <div class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3 mb-2
+                before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
+                before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
+            >
+                {i18n(I18nKey.sakuraAnimation)}
+                <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md active:scale-90"
+                        class:opacity-0={sakuraEnabled === defaultSakuraEnabled} class:pointer-events-none={sakuraEnabled === defaultSakuraEnabled} onclick={resetSakuraEnabled}>
+                    <div class="text-(--btn-content)">
+                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
+                    </div>
+                </button>
+            </div>
+            <div class="space-y-1">
+                <button
+                    class="w-full btn-regular rounded-md py-2 px-3 flex items-center gap-3 text-left active:scale-95 transition-all relative overflow-hidden"
+                    class:bg-(--btn-regular-bg-hover)={sakuraEnabled}
+                    onclick={toggleSakuraEnabled}
+                >
+                    <Icon icon="mdi:flower" class="text-[1.25rem] shrink-0"></Icon>
+                    <span class="text-sm flex-1">{i18n(I18nKey.sakuraAnimation)}</span>
+                    <div class="w-10 h-5 rounded-full transition-all duration-200 relative"
+                         class:bg-(--primary)={sakuraEnabled}
+                         class:bg-(--btn-regular-bg-active)={!sakuraEnabled}>
+                        <div class="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200"
+                             class:left-0.5={!sakuraEnabled}
+                             class:left-5={sakuraEnabled}></div>
+                    </div>
                 </button>
             </div>
         </div>

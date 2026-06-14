@@ -13,6 +13,7 @@ import type { LIGHT_DARK_MODE, WALLPAPER_MODE } from "@/types/config";
 import {
 	backgroundWallpaper,
 	expressiveCodeConfig,
+	sakuraConfig,
 	siteConfig,
 } from "../config";
 import { isHomePage as checkIsHomePage } from "./layout-utils";
@@ -1151,4 +1152,54 @@ export function applyBannerCarouselEnabledToDocument(enabled: boolean): void {
 		"data-banner-carousel-enabled",
 		String(enabled),
 	);
+}
+
+// Sakura animation functions
+export function getDefaultSakuraEnabled(): boolean {
+	return sakuraConfig.enable ?? false;
+}
+
+export function getStoredSakuraEnabled(): boolean {
+	if (
+		typeof localStorage === "undefined" ||
+		typeof localStorage.getItem !== "function"
+	) {
+		return getDefaultSakuraEnabled();
+	}
+	const stored = localStorage.getItem("sakuraEnabled");
+	if (stored === null) {
+		return getDefaultSakuraEnabled();
+	}
+	return stored === "true";
+}
+
+export function setSakuraEnabled(enabled: boolean): void {
+	if (
+		typeof localStorage === "undefined" ||
+		typeof localStorage.setItem !== "function"
+	) {
+		return;
+	}
+	localStorage.setItem("sakuraEnabled", String(enabled));
+	applySakuraEnabledToDocument(enabled);
+}
+
+export function applySakuraEnabledToDocument(enabled: boolean): void {
+	if (typeof document === "undefined") {
+		return;
+	}
+	document.documentElement.setAttribute(
+		"data-sakura-enabled",
+		String(enabled),
+	);
+	const canvas = document.getElementById("canvas_sakura");
+	if (canvas) {
+		if (enabled) {
+			canvas.style.display = "";
+			canvas.classList.remove("sakura-disabled");
+		} else {
+			canvas.style.display = "none";
+			canvas.classList.add("sakura-disabled");
+		}
+	}
 }

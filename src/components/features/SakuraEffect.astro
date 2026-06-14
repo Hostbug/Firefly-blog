@@ -4,10 +4,16 @@ import { sakuraConfig } from "@/config";
 const config = sakuraConfig;
 ---
 
-{sakuraConfig?.enable && (
+{config?.enable && (
 	<script is:inline define:vars={{ sakuraConfig: config }}>
 		let windowWidth = window.innerWidth;
 		let windowHeight = window.innerHeight;
+		// 从 localStorage 读取用户存储的樱花开关状态
+		const storedSakura = localStorage.getItem("sakuraEnabled");
+		const sakuraInitiallyEnabled = storedSakura === null ? true : storedSakura === "true";
+		if (!sakuraInitiallyEnabled) {
+			document.documentElement.setAttribute("data-sakura-enabled", "false");
+		}
 
 		// 樱花对象类
 		class Sakura {
@@ -333,20 +339,40 @@ const config = sakuraConfig;
 
 		// 樱花特效初始化
 		(function() {
-			// 全局标记，确保樱花特效只初始化一次
 			if (window.sakuraInitialized) {
 				return;
 			}
 			
-			// 初始化樱花特效的函数
 			const setupSakura = () => {
 				if (sakuraConfig.enable && !window.sakuraInitialized) {
 					initSakura(sakuraConfig);
 					window.sakuraInitialized = true;
+					// 初始加载时根据 localStorage 状态显示/隐藏
+					if (!sakuraInitiallyEnabled) {
+						applySakuraVisibility(false);
+					}
 				}
 			};
 			
-			// 页面加载完成后初始化樱花特效
+			function applySakuraVisibility(enabled) {
+				const canvas = document.getElementById("canvas_sakura");
+				if (canvas) {
+					if (enabled) {
+						canvas.style.display = "";
+						canvas.classList.remove("sakura-disabled");
+					} else {
+						canvas.style.display = "none";
+						canvas.classList.add("sakura-disabled");
+					}
+				}
+			}
+			
+			// 监听控制面板的樱花开关变化事件
+			window.addEventListener("sakuraToggleChange", (e) => {
+				const enabled = e.detail.enabled;
+				applySakuraVisibility(enabled);
+			});
+			
 			if (document.readyState === 'loading') {
 				document.addEventListener('DOMContentLoaded', setupSakura);
 			} else {
