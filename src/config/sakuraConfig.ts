@@ -2,7 +2,7 @@ import type { SakuraConfig } from "../types/config";
 
 export const sakuraConfig: SakuraConfig = {
 	// 是否启用樱花特效
-	enable: false,
+	enable: true,
 	// 是否允许用户通过控制面板切换樱花动画
 	switchable: true,
 
