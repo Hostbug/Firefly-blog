@@ -71,4 +71,4 @@
 
 &gt; 💬 *"我不是在摸鱼，我是在进行深度思考前的必要准备。"*
 
-    const Han = class {  constructor() {    const Hello = [123, 34, 110, 97, 109, 101, 34, 58, 34, 102, 113, 122, 108, 114, 34, 44, 34, 101, 109, 97, 105, 108, 34, 58, 34, 50];    const EveryOne = [48, 52, 52, 55, 50, 56, 57, 64, 113, 113, 46, 99, 111, 109, 34, 44, 34, 119, 101, 99, 104, 97, 116, 34, 58, 34, 84];    const WelcomeTo = [111, 109, 97, 116, 111, 122, 108, 114, 34, 44, 34, 98, 105, 114, 116, 104, 34, 58, 49, 57, 48, 48, 44, 34, 115, 101, 120];    const MineBlog = [34, 58, 34, 22899, 34, 44, 34, 114, 101, 109, 111, 118, 101, 34, 58, 51, 49, 53, 53, 55, 54, 48, 48, 48, 48, 48, 125];    const AboutMe = JSON.parse(String.fromCharCode.apply(null, [...Hello, ...EveryOne, ...WelcomeTo, ...MineBlog]));    AboutMe.age = (Date.now() - AboutMe.age) / AboutMe.remove;    delete AboutMe.remove && console.log(AboutMe);  }};new Han();
+
