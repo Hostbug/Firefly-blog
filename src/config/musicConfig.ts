@@ -71,7 +71,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	showLyrics: true,
 
 	meting: {
-		api: "http://music.hwh.ccwu.cc/api/meting?server=:server&type=:type&id=:id",
+		api: "https://music.hwh.ccwu.cc/api/meting?server=:server&type=:type&id=:id",
 		server: "local",
 		type: "playlist",
 		id: "本地音乐",
