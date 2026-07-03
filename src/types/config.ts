@@ -718,7 +718,7 @@ export type MusicPlayerConfig = {
 		api?: string;
 
 		// 音乐平台：netease=网易云音乐, tencent=QQ音乐, kugou=酷狗音乐, xiami=虾米音乐, baidu=百度音乐
-		server?: "netease" | "tencent" | "kugou" | "xiami" | "baidu";
+		server?: "netease" | "tencent" | "kugou" | "xiami" | "baidu" | "local";
 
 		// 类型：song=单曲, playlist=歌单, album=专辑, search=搜索, artist=艺术家
 		type?: "song" | "playlist" | "album" | "search" | "artist";
