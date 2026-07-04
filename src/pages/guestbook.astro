@@ -1,90 +1,145 @@
 ---
-import { getEntry, render } from "astro:content";
-import Comment from "@components/comment/index.astro";
-import Markdown from "@components/common/Markdown.astro";
 import { Icon } from "astro-icon/components";
-import { commentConfig, siteConfig } from "@/config";
+import { sayingsData } from "@/config/sayingsConfig";
+import { siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
-// 检查页面是否启用
 if (!siteConfig.pages.guestbook) {
 	return Astro.redirect("/404/");
 }
 
-const guestbookPost = await getEntry("spec", "guestbook");
-
-if (!guestbookPost) {
-	throw new Error("guestbook page content not found");
-}
-
-const { Content } = await render(guestbookPost);
-
-// 检查评论系统是否启用
-const isCommentEnabled = commentConfig?.type && commentConfig.type !== "none";
-
-// 页面标题和描述
 const title = i18n(I18nKey.guestbook);
 const description = i18n(I18nKey.guestbookDescription);
+const description2 = i18n(I18nKey.guestbookDescription2);
 ---
 
 <MainGridLayout title={title} description={description}>
-  <div
-    class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32"
-  >
+  <!-- 页面头部 -->
+  <div class="flex w-full rounded-(--radius-large) overflow-hidden relative">
     <div class="card-base z-10 px-9 py-6 relative w-full">
-      <!-- 页面标题和描述 -->
-      <div class="mb-8">
+      <div class="mb-6">
         <div class="flex items-center gap-3 mb-3">
           <div class="h-8 w-8 rounded-lg bg-(--primary) flex items-center justify-center text-white dark:text-black/70">
-            <Icon name="material-symbols:chat" class="text-[1.5rem]"></Icon>
+            <Icon name="material-symbols:chat-bubble-outline" class="text-[1.5rem]"></Icon>
           </div>
           <div class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
             {title}
           </div>
         </div>
-        {description && (
-          <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
-            {description}
-          </p>
-        )}
+        <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+          {description}
+        </p>
+        <p class="text-sm text-neutral-500 dark:text-neutral-500 mt-1">
+          {description2}
+        </p>
       </div>
-      
-      <Markdown class="mt-2">
-        <Content />
-      </Markdown>
     </div>
   </div>
 
-  <!-- 评论区 -->
-  <div class="mt-4">
-    {isCommentEnabled ? (
-      <Comment post={guestbookPost} customPath="/guestbook/" />
-    ) : (
-      <div class="card-base p-8 mb-6 relative overflow-hidden">
-        <div class="text-center py-8 text-(--content-meta)">
-          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-(--btn-regular-bg) flex items-center justify-center">
-            <svg
-              class="w-8 h-8 text-(--primary)"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              ></path>
-            </svg>
+  <!-- 说说列表 -->
+  <div class="mt-4 flex flex-col gap-4">
+    {sayingsData.map((saying) => (
+      <div class="card-base rounded-(--radius-large) overflow-hidden relative group">
+        <div class="px-6 py-5">
+          <!-- 头部：头像 + 昵称 + 时间 -->
+          <div class="flex items-start gap-3 mb-3">
+            <!-- 头像 -->
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-(--primary) to-purple-400 flex items-center justify-center shrink-0 text-white font-bold text-sm shadow-md">
+              H
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-bold text-neutral-900 dark:text-neutral-100 text-sm">
+                  {siteConfig.navbar.title}
+                </span>
+                {saying.tags && saying.tags.map((tag) => (
+                  <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-(--primary)/10 text-(--primary) font-medium">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div class="flex items-center gap-2 text-xs text-neutral-400 dark:text-neutral-500 mt-0.5">
+                <span>{saying.time}</span>
+                {saying.location && (
+                  <>
+                    <span>·</span>
+                    <span class="flex items-center gap-0.5">
+                      <Icon name="material-symbols:location-on-outline" class="text-[12px]" />
+                      {saying.location}
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
-          <p class="text-base mb-2">{i18n(I18nKey.commentNotConfigured)}</p>
-          <p class="text-sm text-(--content-meta) opacity-75">
-            {i18n(I18nKey.guestbookCommentHint)}
-          </p>
+
+          <!-- 内容 -->
+          <div class="pl-13 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200 whitespace-pre-line">
+            {saying.content}
+          </div>
+
+          <!-- 图片（如果有） -->
+          {saying.images && saying.images.length > 0 && (
+            <div class:list={[
+              "pl-13 mt-3 gap-2",
+              saying.images.length === 1 ? "grid grid-cols-1 max-w-[280px]" :
+              saying.images.length === 4 ? "grid grid-cols-2 max-w-[280px]" :
+              "grid grid-cols-3",
+            ]}>
+              {saying.images.map((img) => (
+                <div class="rounded-lg overflow-hidden aspect-square bg-neutral-100 dark:bg-neutral-800">
+                  <img src={img} alt="" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+              ))}
+            </div>
+          )}
+
+          <!-- 分割线 -->
+          <div class="border-t border-neutral-100 dark:border-neutral-700/50 mt-4 pt-3">
+            <!-- 互动栏：点赞 + 评论 -->
+            <div class="flex items-center gap-6 text-neutral-400 dark:text-neutral-500">
+              <button class="flex items-center gap-1.5 hover:text-red-400 transition-colors duration-200 text-sm group/like">
+                <Icon name="material-symbols:favorite-outline" class="text-[18px] group-hover/like:text-red-400" />
+                <span>{saying.likes}</span>
+              </button>
+              {saying.comments && saying.comments.length > 0 && (
+                <button class="flex items-center gap-1.5 hover:text-(--primary) transition-colors duration-200 text-sm">
+                  <Icon name="material-symbols:chat-bubble-outline" class="text-[18px]" />
+                  <span>{saying.comments.length}</span>
+                </button>
+              )}
+            </div>
+
+            <!-- 评论区 -->
+            {saying.comments && saying.comments.length > 0 && (
+              <div class="mt-3 bg-neutral-50/80 dark:bg-neutral-800/50 rounded-lg p-3 space-y-2">
+                {saying.comments.map((comment) => (
+                  <div class="flex items-start gap-2 text-sm">
+                    <div class="w-5 h-5 rounded-full bg-neutral-200 dark:bg-neutral-600 flex items-center justify-center shrink-0 text-[9px] font-bold text-neutral-600 dark:text-neutral-300 mt-0.5">
+                      {comment.author.charAt(0)}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <span class="font-medium text-neutral-700 dark:text-neutral-300">{comment.author}</span>
+                      <span class="text-neutral-500 dark:text-neutral-400 ml-1">{comment.text}</span>
+                      {comment.time && (
+                        <div class="text-[10px] text-neutral-400 dark:text-neutral-500 mt-0.5">{comment.time}</div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    )}
+    ))}
   </div>
 </MainGridLayout>
+
+<style>
+  .pl-13 {
+    padding-left: 3.25rem;
+  }
+</style>
