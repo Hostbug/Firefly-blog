@@ -92,15 +92,6 @@ export const sayingsData: Saying[] = [
     tags: [],
   },
   {
-    id: 9,
-    content: "新入手了一套键帽，樱桃粉轴的手感太好了。\n噼里啪啦的声音是写代码的 BGM。\n（邻居可能不这么想）",
-    media: [],
-    time: "2026-06-15 20:00",
-    location: "",
-    likes: 35,
-    tags: ["装备"],
-  },
-  {
     id: 10,
     content: "凌晨三点的 bug，清晨六点终于修好了。\n原来是一个分号的问题。\n世界和平了，我也要去和平了（睡觉）。",
     media: [],
