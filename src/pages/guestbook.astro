@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { sayingsData } from "@/config/sayingsConfig";
-import { siteConfig } from "@/config";
+import { commentConfig, siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
@@ -13,9 +13,23 @@ if (!siteConfig.pages.guestbook) {
 const title = i18n(I18nKey.guestbook);
 const description = i18n(I18nKey.guestbookDescription);
 const description2 = i18n(I18nKey.guestbookDescription2);
+
+const isArtalkEnabled = commentConfig.type === "artalk";
+const artalkConfig = isArtalkEnabled ? {
+	server: commentConfig.artalk?.server || "",
+	site: siteConfig.title,
+	locale: commentConfig.artalk?.locale || "zh-CN",
+	dark: "html.dark",
+} : null;
+const artalkConfigStr = artalkConfig ? JSON.stringify(artalkConfig) : "";
 ---
 
 <MainGridLayout title={title} description={description}>
+  <!-- Artalk CSS -->
+  {isArtalkEnabled && (
+    <link rel="stylesheet" href="https://unpkg.com/artalk/dist/Artalk.css" slot="head" />
+  )}
+
   <!-- 页面头部 -->
   <div class="flex w-full rounded-(--radius-large) overflow-hidden relative">
     <div class="card-base z-10 px-9 py-6 relative w-full">
@@ -41,11 +55,10 @@ const description2 = i18n(I18nKey.guestbookDescription2);
   <!-- 说说列表 -->
   <div class="mt-4 flex flex-col gap-4">
     {sayingsData.map((saying) => (
-      <div class="card-base rounded-(--radius-large) overflow-hidden relative group">
+      <div class="card-base rounded-(--radius-large) overflow-hidden relative group saying-card" data-saying-id={saying.id}>
         <div class="px-6 py-5">
           <!-- 头部：头像 + 昵称 + 时间 -->
           <div class="flex items-start gap-3 mb-3">
-            <!-- 头像 -->
             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-(--primary) to-purple-400 flex items-center justify-center shrink-0 text-white font-bold text-sm shadow-md">
               H
             </div>
@@ -80,55 +93,60 @@ const description2 = i18n(I18nKey.guestbookDescription2);
             {saying.content}
           </div>
 
-          <!-- 图片（如果有） -->
-          {saying.images && saying.images.length > 0 && (
+          <!-- 媒体：图片/视频 -->
+          {saying.media && saying.media.length > 0 && (
             <div class:list={[
               "pl-13 mt-3 gap-2",
-              saying.images.length === 1 ? "grid grid-cols-1 max-w-[280px]" :
-              saying.images.length === 4 ? "grid grid-cols-2 max-w-[280px]" :
+              saying.media.length === 1 ? "grid grid-cols-1 max-w-[320px]" :
+              saying.media.length === 4 ? "grid grid-cols-2 max-w-[320px]" :
               "grid grid-cols-3",
             ]}>
-              {saying.images.map((img) => (
-                <div class="rounded-lg overflow-hidden aspect-square bg-neutral-100 dark:bg-neutral-800">
-                  <img src={img} alt="" class="w-full h-full object-cover" loading="lazy" />
-                </div>
+              {saying.media.map((item) => (
+                item.type === "image" ? (
+                  <div class="rounded-lg overflow-hidden aspect-square bg-neutral-100 dark:bg-neutral-800 cursor-pointer hover:opacity-90 transition-opacity">
+                    <img src={item.url} alt="" class="w-full h-full object-cover" loading="lazy" />
+                  </div>
+                ) : (
+                  <div class="rounded-lg overflow-hidden aspect-square bg-neutral-900 relative group/video">
+                    <video
+                      src={item.url}
+                      poster={item.poster}
+                      controls
+                      preload="metadata"
+                      class="w-full h-full object-cover"
+                      playsinline
+                    />
+                  </div>
+                )
               ))}
             </div>
           )}
 
-          <!-- 分割线 -->
+          <!-- 分割线 + 互动栏 -->
           <div class="border-t border-neutral-100 dark:border-neutral-700/50 mt-4 pt-3">
-            <!-- 互动栏：点赞 + 评论 -->
             <div class="flex items-center gap-6 text-neutral-400 dark:text-neutral-500">
-              <button class="flex items-center gap-1.5 hover:text-red-400 transition-colors duration-200 text-sm group/like">
+              <button class="flex items-center gap-1.5 hover:text-red-400 transition-colors duration-200 text-sm group/like btn-like" data-id={saying.id}>
                 <Icon name="material-symbols:favorite-outline" class="text-[18px] group-hover/like:text-red-400" />
-                <span>{saying.likes}</span>
+                <span class="like-count">{saying.likes}</span>
               </button>
-              {saying.comments && saying.comments.length > 0 && (
-                <button class="flex items-center gap-1.5 hover:text-(--primary) transition-colors duration-200 text-sm">
+              {isArtalkEnabled && (
+                <button class="flex items-center gap-1.5 hover:text-(--primary) transition-colors duration-200 text-sm btn-toggle-comment" data-target={`artalk-saying-${saying.id}`}>
                   <Icon name="material-symbols:chat-bubble-outline" class="text-[18px]" />
-                  <span>{saying.comments.length}</span>
+                  <span>评论</span>
                 </button>
               )}
             </div>
 
-            <!-- 评论区 -->
-            {saying.comments && saying.comments.length > 0 && (
-              <div class="mt-3 bg-neutral-50/80 dark:bg-neutral-800/50 rounded-lg p-3 space-y-2">
-                {saying.comments.map((comment) => (
-                  <div class="flex items-start gap-2 text-sm">
-                    <div class="w-5 h-5 rounded-full bg-neutral-200 dark:bg-neutral-600 flex items-center justify-center shrink-0 text-[9px] font-bold text-neutral-600 dark:text-neutral-300 mt-0.5">
-                      {comment.author.charAt(0)}
-                    </div>
-                    <div class="flex-1 min-w-0">
-                      <span class="font-medium text-neutral-700 dark:text-neutral-300">{comment.author}</span>
-                      <span class="text-neutral-500 dark:text-neutral-400 ml-1">{comment.text}</span>
-                      {comment.time && (
-                        <div class="text-[10px] text-neutral-400 dark:text-neutral-500 mt-0.5">{comment.time}</div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+            <!-- Artalk 评论容器（默认隐藏） -->
+            {isArtalkEnabled && (
+              <div class="mt-3 artalk-comment-wrapper hidden" id={`artalk-saying-${saying.id}`}>
+                <div
+                  class="saying-artalk-container"
+                  id={`artalk-container-${saying.id}`}
+                  data-page-key={`/guestbook/saying-${saying.id}`}
+                  data-page-title={`${title} #${saying.id}`}
+                  style="--at-color-main: var(--primary); --at-color-bg: var(--card-bg); --at-color-border: var(--line-divider);"
+                ></div>
               </div>
             )}
           </div>
@@ -142,4 +160,73 @@ const description2 = i18n(I18nKey.guestbookDescription2);
   .pl-13 {
     padding-left: 3.25rem;
   }
+  .saying-artalk-container :global(.artalk) {
+    padding: 0;
+  }
 </style>
+
+{isArtalkEnabled && (
+  <script is:inline define:vars={{ artalkConfigStr, sayingsCount: sayingsData.length }}>
+    (function() {
+      var config = JSON.parse(artalkConfigStr);
+      var artalkInstances = {};
+
+      async function initArtalkForSaying(sayingId, el) {
+        if (artalkInstances[sayingId]) return artalkInstances[sayingId];
+
+        var module = await import('https://unpkg.com/artalk/dist/Artalk.mjs');
+        var Artalk = module.default;
+
+        var container = document.getElementById('artalk-container-' + sayingId);
+        if (!container) return null;
+
+        var instance = Artalk.init({
+          server: config.server,
+          site: config.site,
+          locale: config.locale,
+          dark: config.dark,
+          el: container,
+          pageKey: container.dataset.pageKey,
+          pageTitle: container.dataset.pageTitle,
+        });
+
+        artalkInstances[sayingId] = instance;
+        return instance;
+      }
+
+      // 切换评论显示/隐藏
+      document.addEventListener('click', function(e) {
+        var btn = e.target.closest('.btn-toggle-comment');
+        if (!btn) return;
+
+        var targetId = btn.dataset.target;
+        var wrapper = document.getElementById(targetId);
+        if (!wrapper) return;
+
+        var sayingId = targetId.replace('artalk-saying-', '');
+        var isHidden = wrapper.classList.contains('hidden');
+
+        if (isHidden) {
+          wrapper.classList.remove('hidden');
+          initArtalkForSaying(sayingId);
+        } else {
+          wrapper.classList.add('hidden');
+        }
+      });
+
+      // 深色模式同步
+      function updateTheme() {
+        var isDark = document.documentElement.classList.contains('dark');
+        Object.values(artalkInstances).forEach(function(inst) {
+          if (inst && inst.setDarkMode) inst.setDarkMode(isDark);
+        });
+      }
+
+      var observer = new MutationObserver(function() { updateTheme(); });
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    })();
+  </script>
+)}
