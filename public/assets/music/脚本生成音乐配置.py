@@ -32,9 +32,9 @@ def generate_music_json(music_dir):
         music_list.append({
             "name": song_name,
             "artist": artist,
-            "url": f"Firefly-blog/src/assets/music/{mp3_file}",
+            "url": f"/assets/music/{mp3_file}",
             "cover": "",
-            "lrc": f"Firefly-blog/src/assets/music/{lrc_file}" if lrc_file else "",
+            "lrc": f"/assets/music/{lrc_file}" if lrc_file else "",
         })
 
     return music_list
@@ -77,7 +77,7 @@ def write_music_config(music_dir, output_path=None):
 
 
 # ========== 运行 ==========
-MUSIC_DIR = r"G:\Firefly-blog\src\assets\music"
+MUSIC_DIR = r"G:\Firefly-blog\public\assets\music"
 
 if __name__ == "__main__":
     if not os.path.exists(MUSIC_DIR):
