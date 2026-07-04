@@ -163,6 +163,23 @@ const artalkConfigStr = artalkConfig ? JSON.stringify(artalkConfig) : "";
   .saying-artalk-container :global(.artalk) {
     padding: 0;
   }
+
+  /* Artalk 暗色模式完整适配 */
+  .dark .saying-artalk-container {
+    --at-color-bg: var(--card-bg);
+    --at-color-bg-trans: oklch(0.23 0.015 var(--hue) / 0.8);
+    --at-color-bg-second: oklch(0.28 0.015 var(--hue));
+    --at-color-bg-second-trans: oklch(0.28 0.015 var(--hue) / 0.8);
+    --at-color-text: oklch(0.85 0.01 var(--hue));
+    --at-color-text-long: oklch(0.7 0.01 var(--hue));
+    --at-color-text-secondary: oklch(0.6 0.01 var(--hue));
+    --at-color-text-placeholder: oklch(0.5 0.01 var(--hue));
+    --at-color-border: oklch(1 0 0 / 0.08);
+    --at-color-border-light: oklch(1 0 0 / 0.05);
+    --at-color-primary: var(--primary);
+    --at-color-success: oklch(0.7 0.15 145);
+    --at-color-danger: oklch(0.65 0.2 25);
+  }
 </style>
 
 {isArtalkEnabled && (
