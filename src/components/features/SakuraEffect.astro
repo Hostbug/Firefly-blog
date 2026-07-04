@@ -342,15 +342,15 @@ const config = sakuraConfig;
 			if (window.sakuraInitialized) {
 				return;
 			}
-			
+
 			const setupSakura = () => {
 				if (sakuraConfig.enable && !window.sakuraInitialized) {
-					initSakura(sakuraConfig);
 					window.sakuraInitialized = true;
-					// 初始加载时根据 localStorage 状态显示/隐藏
 					if (!sakuraInitiallyEnabled) {
-						applySakuraVisibility(false);
+						// 用户明确关闭了樱花，不启动动画
+						return;
 					}
+					initSakura(sakuraConfig);
 				}
 			};
 			
@@ -366,11 +366,20 @@ const config = sakuraConfig;
 					}
 				}
 			}
-			
+
 			// 监听控制面板的樱花开关变化事件
 			window.addEventListener("sakuraToggleChange", (e) => {
 				const enabled = e.detail.enabled;
-				applySakuraVisibility(enabled);
+				if (enabled) {
+					// 用户开启樱花：如果管理器还没创建就启动
+					if (!globalSakuraManager || !globalSakuraManager.getIsRunning()) {
+						initSakura({ ...sakuraConfig, enable: true });
+					} else {
+						applySakuraVisibility(true);
+					}
+				} else {
+					applySakuraVisibility(false);
+				}
 			});
 			
 			if (document.readyState === 'loading') {

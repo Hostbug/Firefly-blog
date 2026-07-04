@@ -547,7 +547,53 @@ const widgetId =
         mgr.setVolume(val);
     });
 
+    // ── Progress bar: click + drag (mouse & touch) ─────────────
+    function getProgressFromEvent(e) {
+        var rect = ui.progressContainer.getBoundingClientRect();
+        var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        var clickX = clientX - rect.left;
+        return Math.min(Math.max(clickX / rect.width, 0), 1);
+    }
+
+    function onProgressStart(e) {
+        e.preventDefault();
+        ui.progressContainer._dragging = true;
+        var percent = getProgressFromEvent(e);
+        ui.progressBar.style.transition = 'none';
+        ui.progressThumb.style.transition = 'none';
+        ui.progressBar.style.width = (percent * 100) + '%';
+        ui.progressThumb.style.left = (percent * 100) + '%';
+    }
+
+    function onProgressMove(e) {
+        if (!ui.progressContainer._dragging) return;
+        e.preventDefault();
+        var percent = getProgressFromEvent(e);
+        ui.progressBar.style.width = (percent * 100) + '%';
+        ui.progressThumb.style.left = (percent * 100) + '%';
+    }
+
+    function onProgressEnd(e) {
+        if (!ui.progressContainer._dragging) return;
+        ui.progressContainer._dragging = false;
+        ui.progressBar.style.transition = '';
+        ui.progressThumb.style.transition = '';
+        var clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+        var rect = ui.progressContainer.getBoundingClientRect();
+        var percent = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+        mgr.seek(percent);
+    }
+
+    ui.progressContainer.addEventListener('mousedown', onProgressStart);
+    ui.progressContainer.addEventListener('touchstart', onProgressStart, { passive: false });
+    document.addEventListener('mousemove', onProgressMove);
+    document.addEventListener('touchmove', onProgressMove, { passive: false });
+    document.addEventListener('mouseup', onProgressEnd);
+    document.addEventListener('touchend', onProgressEnd);
+
+    // 点击也支持（非拖动的简单点击）
     ui.progressContainer.addEventListener('click', function (e) {
+        if (e._fromDrag) return;
         var rect = ui.progressContainer.getBoundingClientRect();
         var clickX = e.clientX - rect.left;
         var percent = Math.min(Math.max(clickX / rect.width, 0), 1);
