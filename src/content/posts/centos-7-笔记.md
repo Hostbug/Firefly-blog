@@ -8,16 +8,6 @@ tags: [CentOS, Linux]
 author: "xiaoH"
 ---
 
----
-title: CentOS 7 笔记
-published: 2026-07-06
-description: CentOS 7 从零开始的完整教程
-category: 云计算
-tags:
-  - CentOS
-  - Linux
----
-
 ## 一、CentOS 镜像下载
 
 ### 1.1 官方镜像源
