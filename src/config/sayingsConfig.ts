@@ -65,15 +65,6 @@ export const sayingsData: Saying[] = [
     tags: ["读书"],
   },
   {
-    id: 6,
-    content: "下雨天，窝在沙发上看了一下午的番。\n窗外雨声淅沥，屏幕里是另一个世界。\n完美的周末。",
-    media: [],
-    time: "2026-06-22 17:00",
-    location: "",
-    likes: 20,
-    tags: ["番剧", "周末"],
-  },
-  {
     id: 10,
     content: "凌晨三点的 bug，清晨六点终于修好了。\n原来是一个分号的问题。\n世界和平了，我也要去和平了（睡觉）。",
     media: [],
