@@ -56,15 +56,6 @@ export const sayingsData: Saying[] = [
     tags: [],
   },
   {
-    id: 5,
-    content: "读完了《百年孤独》。\n马尔克斯笔下的时间是圆的，所有的事都在重复，又都不一样。\n好书值得反复读。",
-    media: [],
-    time: "2026-06-25 22:00",
-    location: "",
-    likes: 15,
-    tags: ["读书"],
-  },
-  {
     id: 10,
     content: "凌晨三点的 bug，清晨六点终于修好了。\n原来是一个分号的问题。\n世界和平了，我也要去和平了（睡觉）。",
     media: [],
