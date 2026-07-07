@@ -45,15 +45,6 @@ export const sayingsData: Saying[] = [
     tags: ["日常"],
   },
   {
-    id: 10,
-    content: "凌晨三点的 bug，清晨六点终于修好了。\n原来是一个分号的问题。\n世界和平了，我也要去和平了（睡觉）。",
-    media: [],
-    time: "2026-06-12 06:15",
-    location: "",
-    likes: 42,
-    tags: ["编程", "日常"],
-  },
-  {
     id: 12,
     content: "深夜的网易云推了一首老歌，突然想起了很多事。\n有些歌之所以好听，是因为它承载了一段记忆。",
     media: [],
