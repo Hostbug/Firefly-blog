@@ -43,14 +43,5 @@ export const sayingsData: Saying[] = [
     location: "",
     likes: 18,
     tags: ["日常"],
-  },
-  {
-    id: 12,
-    content: "深夜的网易云推了一首老歌，突然想起了很多事。\n有些歌之所以好听，是因为它承载了一段记忆。",
-    media: [],
-    time: "2026-06-05 23:40",
-    location: "",
-    likes: 28,
-    tags: ["音乐", "感悟"],
   }
 ];
