@@ -74,15 +74,6 @@ export const sayingsData: Saying[] = [
     tags: ["番剧", "周末"],
   },
   {
-    id: 7,
-    content: "学到了一个新 CSS 技巧，原来 grid 布局还能这样用！\n感觉自己又变强了一点点 ✨\n技术分享链接已放在评论区。",
-    media: [],
-    time: "2026-06-20 14:30",
-    location: "",
-    likes: 27,
-    tags: ["技术", "CSS"],
-  },
-  {
     id: 10,
     content: "凌晨三点的 bug，清晨六点终于修好了。\n原来是一个分号的问题。\n世界和平了，我也要去和平了（睡觉）。",
     media: [],
