@@ -45,17 +45,6 @@ export const sayingsData: Saying[] = [
     tags: ["日常"],
   },
   {
-    id: 4,
-    content: "今天吃到了一家超好吃的拉面店 🍜\n浓郁的豚骨汤底，溏心蛋刚刚好。\n幸福感拉满的一天。",
-    media: [
-    { type: "video", url: "/assets/videos/sample.mp4", poster: "/assets/images/sakura.png" }
-  ],
-    time: "2026-06-28 12:30",
-    location: "某条小巷子",
-    likes: 31,
-    tags: [],
-  },
-  {
     id: 10,
     content: "凌晨三点的 bug，清晨六点终于修好了。\n原来是一个分号的问题。\n世界和平了，我也要去和平了（睡觉）。",
     media: [],
