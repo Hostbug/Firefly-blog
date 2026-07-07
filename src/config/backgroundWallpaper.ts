@@ -154,7 +154,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 反正我目前不是很满意这个过渡效果，所以默认关闭了，如果你有更好的过渡效果方案，欢迎提交PR改进这个功能
 			enable: false,
 			// 轮播切换间隔（毫秒）
-			interval: 5000,
+			interval: 10000,
 			// 是否允许用户通过控制面板切换横幅轮播
 			switchable: true,
 		},
