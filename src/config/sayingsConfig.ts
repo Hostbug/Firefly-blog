@@ -83,15 +83,6 @@ export const sayingsData: Saying[] = [
     tags: ["技术", "CSS"],
   },
   {
-    id: 8,
-    content: "下班路上拍到的云彩，像棉花糖一样。\n有时候觉得，美就在身边，只是我们走得太快。",
-    media: [],
-    time: "2026-06-18 18:45",
-    location: "回家路上",
-    likes: 19,
-    tags: [],
-  },
-  {
     id: 10,
     content: "凌晨三点的 bug，清晨六点终于修好了。\n原来是一个分号的问题。\n世界和平了，我也要去和平了（睡觉）。",
     media: [],
