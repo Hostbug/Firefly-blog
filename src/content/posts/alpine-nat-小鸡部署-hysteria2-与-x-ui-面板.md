@@ -1,18 +1,18 @@
 ---
-title: "Alpine NAT 小鸡部署 Hysteria2 与 X-UI 面板"
+title: "Debian NAT 小鸡部署 Hysteria2 与 X-UI 面板"
 published: 2026-06-24
 description: "记录使用 NAT VPS 搭建 Hysteria2 节点和 X-UI 管理面板的完整过程，包括端口映射、节点配置及常见管理命令，实现vpn直连"
 image: https://tse4.mm.bing.net/th/id/OIP.D-4N9gpG64E4fBCiAN8WvQHaEK?r=0&cb=thumbexpctl1&rs=1&pid=ImgDetMain&o=7&rm=3
 category: server
-tags: [VPN, Alpine Linux, Hysteria2]
+tags: [VPN, Debian Linux, Hysteria2]
 author: "xiaoH"
 ---
 
-# Alpine NAT VPS 搭建 Hysteria2 与 X-UI
+# Debian NAT VPS 搭建 Hysteria2 与 X-UI
 
 ## 前言
 
-由于 NAT 类型服务器价格便宜、资源利用率高，因此受到不少个人用户欢迎。本文以一台 Alpine 系统 NAT VPS 为例，演示如何完成端口映射、Hysteria2 节点部署以及 X-UI 面板安装等操作。
+由于 NAT 类型服务器价格便宜、资源利用率高，因此受到不少个人用户欢迎。本文以一台 Debian 系统 NAT VPS 为例，演示如何完成端口映射、Hysteria2 节点部署以及 X-UI 面板安装等操作。
 
 > NAT VPS 通常没有独立公网端口，需要提前在商家后台完成端口映射配置。
 
@@ -157,7 +157,7 @@ https://
 
 ---
 
-# 三、部署 X-UI 面板
+# 三、部署 X-UI 面板(可选)
 
 为了方便后续节点管理，可以安装 X-UI。
 
