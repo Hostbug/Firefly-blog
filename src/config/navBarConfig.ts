@@ -65,7 +65,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		// 子菜单
 		children: [
 			{
-				name: "邮箱",
+				name: "xiaoH邮箱",
 				url: "http://h5201314h.de5.net",
 				external: true,
 				icon: "",
