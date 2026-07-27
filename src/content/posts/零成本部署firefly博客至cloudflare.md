@@ -2,6 +2,7 @@
 title: "零成本部署Firefly博客至Cloudflare"
 published: 2026-07-27
 description: "手把手教你把 Firefly 静态博客免费托管到 Cloudflare 边缘网络，无需服务器、无需备案，推送即自动部署。"
+image: http://gallery.hwh.ccwu.cc/img/3b22aeccb472.jpg
 category: 教程
 tags: [Firefly, 博客]
 author: "xiaoH"
