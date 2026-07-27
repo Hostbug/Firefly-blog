@@ -7,7 +7,7 @@ tags: [Firefly, 博客]
 author: "xiaoH"
 ---
 
-# 🚀 零成本上线：将 Firefly 博客部署至 Cloudflare Workers / Pages
+# 🚀 零成本部署Firefly博客至Cloudflare Workers / Pages
 
 对于个人博客而言，最理想的状态莫过于"写完即发布"。Firefly 作为基于 Astro 构建的静态博客主题，天然适合托管在各类边缘计算平台上。而在众多选择中，Cloudflare 的 Workers 与 Pages 服务因其**零费用**、**全球加速**、**自动 HTTPS** 等特性，成为性价比极高的部署方案。
 
