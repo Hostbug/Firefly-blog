@@ -54,7 +54,7 @@ const artalkConfigStr = artalkConfig ? JSON.stringify(artalkConfig) : "";
 
   <!-- 说说列表 -->
   <div class="mt-4 flex flex-col gap-4">
-    {sayingsData.map((saying) => (
+    {[...sayingsData].sort((a,b)=>new Date(b.time).getTime()-new Date(a.time).getTime()).map((saying) => (
       <div class="card-base rounded-(--radius-large) overflow-hidden relative group saying-card" data-saying-id={saying.id}>
         <div class="px-6 py-5">
           <!-- 头部：头像 + 昵称 + 时间 -->
@@ -97,25 +97,18 @@ const artalkConfigStr = artalkConfig ? JSON.stringify(artalkConfig) : "";
           {saying.media && saying.media.length > 0 && (
             <div class:list={[
               "pl-13 mt-3 gap-2",
-              saying.media.length === 1 ? "grid grid-cols-1 max-w-[320px]" :
-              saying.media.length === 4 ? "grid grid-cols-2 max-w-[320px]" :
+              saying.media.length === 1 ? "grid grid-cols-1 max-w-[520px]" :
+              saying.media.length === 4 ? "grid grid-cols-2 max-w-[520px]" :
               "grid grid-cols-3",
             ]}>
               {saying.media.map((item) => (
                 item.type === "image" ? (
-                  <div class="rounded-lg overflow-hidden aspect-square bg-neutral-100 dark:bg-neutral-800 cursor-pointer hover:opacity-90 transition-opacity">
-                    <img src={item.url} alt="" class="w-full h-full object-cover" loading="lazy" />
+                  <div class="rounded-lg overflow-hidden aspect-video bg-neutral-100 dark:bg-neutral-800 cursor-pointer hover:opacity-90 transition-opacity">
+                    <a href={item.url} data-fancybox="sayings"><img src={item.url} alt="" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" loading="lazy" /></a>
                   </div>
                 ) : (
-                  <div class="rounded-lg overflow-hidden aspect-square bg-neutral-900 relative group/video">
-                    <video
-                      src={item.url}
-                      poster={item.poster}
-                      controls
-                      preload="metadata"
-                      class="w-full h-full object-cover"
-                      playsinline
-                    />
+                  <div class="rounded-lg overflow-hidden aspect-video bg-neutral-900 relative group/video">
+                    <video controls preload="metadata" playsinline webkit-playsinline controlsList="nodownload" class="w-full h-full object-cover rounded-lg"><source src={item.url} type="video/mp4" />您的浏览器不支持 video 标签</video>
                   </div>
                 )
               ))}
@@ -180,6 +173,7 @@ const artalkConfigStr = artalkConfig ? JSON.stringify(artalkConfig) : "";
     --at-color-success: oklch(0.7 0.15 145);
     --at-color-danger: oklch(0.65 0.2 25);
   }
+@media (max-width:768px){.pl-13{padding-left:0}.saying-card{border-radius:16px}video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;border-radius:12px}}
 </style>
 
 {isArtalkEnabled && (
