@@ -3,8 +3,8 @@ title: "Debian NAT 小鸡部署 Hysteria2 与 X-UI 面板"
 published: 2026-06-24
 description: "记录使用 NAT VPS 搭建 Hysteria2 节点和 X-UI 管理面板的完整过程，包括端口映射、节点配置及常见管理命令，实现vpn直连"
 image: https://tse4.mm.bing.net/th/id/OIP.D-4N9gpG64E4fBCiAN8WvQHaEK?r=0&cb=thumbexpctl1&rs=1&pid=ImgDetMain&o=7&rm=3
-category: server
-tags: [VPN, Debian Linux, Hysteria2]
+category: 教程
+tags: [VPN, Hysteria2]
 author: "xiaoH"
 ---
 
