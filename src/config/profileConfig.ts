@@ -24,19 +24,13 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "qq",
 			icon: "fa7-brands:qq",
-			url: "https://qm.qq.com/q/ZGsFa8qX2G",
-			showName: false,
-		},
-		{
-			name: "GitHub",
-			icon: "fa7-brands:github",
-			url: "https://github.com/CuteLeaf",
+			url: "https://qun.qq.com/universal-share/share?ac=1&authKey=N%2BUmyI2%2BkO%2Fejdbuz22vu1xjgFgjKGCG93D9NeRYopY1y3mZktEeyheDkHaC%2Ffb9&busi_data=eyJncm91cENvZGUiOiIxMDkwNjM0ODU0IiwidG9rZW4iOiJjcVF3VWVxN25uQTZSeG9Hdkw2cHQ4enZnc1BHQzlvZHRFcVFUa3Nzbi9XZ3pWYnFab2hhSno0a1E3aCs4eHBjIiwidWluIjoiMzEwODQ1NTYxOSJ9&data=9FvUF0VcbpjWEuI2UciqDqv3VFj_n3hou9QobTktV19AxNBmv8R1CHybCVy6opXjGQxgx8xp3uPUbjO4BA71jw&svctype=4&tempid=h5_group_info",
 			showName: false,
 		},
 		{
 			name: "Email",
 			icon: "fa7-solid:envelope",
-			url: "mailto:xiaye@msn.com",
+			url: "mailto:blog@h5201314h.de5.net",
 			showName: false,
 		},
 		{

@@ -65,19 +65,31 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		// 子菜单
 		children: [
 			{
-				name: "GitHub",
-				url: "https://github.com/CuteLeaf/Firefly",
+				name: "邮箱",
+				url: "http://h5201314h.de5.net",
 				external: true,
-				icon: "fa7-brands:github",
+				icon: "",
 			},
 			{
-				name: "Gitee",
-				url: "https://gitee.com/CuteLeaf/Firefly",
+				name: "artalk评论",
+				url: "http://artalk.hwh.ccwu.cc",
 				external: true,
-				icon: "fa7-brands:gitee",
+				icon: "",
 			},
 			{
-				name: "QQ交流群",
+				name: "gallery图库",
+				url: "http://gallery.hwh.ccwu.cc",
+				external: true,
+				icon: "",
+			},
+			{
+				name: "admin",
+				url: "http://admin.hwh.ccwu.cc",
+				external: true,
+				icon: "",
+			},
+			{
+				name: "QQ聊天群",
 				url: "https://qun.qq.com/universal-share/share?ac=1&authKey=N%2BUmyI2%2BkO%2Fejdbuz22vu1xjgFgjKGCG93D9NeRYopY1y3mZktEeyheDkHaC%2Ffb9&busi_data=eyJncm91cENvZGUiOiIxMDkwNjM0ODU0IiwidG9rZW4iOiJjcVF3VWVxN25uQTZSeG9Hdkw2cHQ4enZnc1BHQzlvZHRFcVFUa3Nzbi9XZ3pWYnFab2hhSno0a1E3aCs4eHBjIiwidWluIjoiMzEwODQ1NTYxOSJ9&data=9FvUF0VcbpjWEuI2UciqDqv3VFj_n3hou9QobTktV19AxNBmv8R1CHybCVy6opXjGQxgx8xp3uPUbjO4BA71jw&svctype=4&tempid=h5_group_info",
 				external: true,
 				icon: "fa7-brands:qq",
