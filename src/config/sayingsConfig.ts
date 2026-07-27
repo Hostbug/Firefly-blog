@@ -34,5 +34,16 @@ export const sayingsData: Saying[] = [
     location: "127.0.0.1",
     likes: 520,
     tags: ["日常"],
+  },
+  {
+    id: 5,
+    content: "test img 1",
+    media: [
+    { type: "image", url: "http://gallery.hwh.ccwu.cc/img/a8a3551bf4fb.jpg" }
+  ],
+    time: "2026-07-28 00:11",
+    location: "127.0.0.1",
+    likes: 520,
+    tags: ["日常"],
   }
 ];
